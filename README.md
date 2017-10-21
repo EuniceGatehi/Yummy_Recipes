@@ -5,4 +5,4 @@ Follow this link to view the UI https://www.eunicegatehi.github.io
 # Installation
 clone the repository using
  HTTPS https://github.com/EuniceGatehi/Yummy_Recipes.git
-![image](Design/Readme_image/home.PNG)
+![image](Designs/Readme_image/home.PNG)
