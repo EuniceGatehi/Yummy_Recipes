@@ -28,25 +28,20 @@
       <div class="jumbotron" style=" width: 70%;">
 
         <div class="row">
+          {% if resp in resp%}
+          <div class="alert alert-success" role="alert" id="reg-alert">
+            {{ resp }}
+        </div>
+          {%endif%}
           
-          
-          <form class="form-signin">
+          <form class="form-signin" action="/registration" method="post">
             <h2 class="form-signin-heading"><center>Register</center></h2>
-
-            <div class="row">
-              <div class="form-group">
-                <label>Name</label>
-                <label for="inputEmail" class="sr-only">Name</label>
-
-                <input type="email" id="inputEmail" class="form-control" placeholder="Name" required autofocus>
-              </div>
-            </div>
             <div class="row">
               <div class="form-group">
                 <label>Username</label>
                 <label for="inputEmail" class="sr-only">Username</label>
 
-                <input type="email" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+                <input type="text" name="inputName" class="form-control" placeholder="Username" required autofocus>
               </div>
             </div>
             <div class="row">
@@ -54,22 +49,22 @@
                 <label>Email Address</label>
                 <label for="inputEmail" class="sr-only">Email address</label>
 
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
               </div>
             </div>
             <div class="row">
               <div class="form-group">
                 <label>Enter Password</label>
-                <label for="inputEmail" class="sr-only">Password</label>
+                <label for="inputpass" class="sr-only">Password</label>
 
-                <input type="email" id="inputEmail" class="form-control" placeholder="Password" required autofocus>
+                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required autofocus>
               </div>
             </div>
             <div class="row">
               <div class="form-group">
                 <label>Confirm Password</label>
                 <label for="inputPassword" class="sr-only">Confirm password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
+                <input type="password" name="inputConfirmPassword" class="form-control" placeholder="Confirm Password" required>
               </div>
             </div>
             <!-- <div class="row"> -->
