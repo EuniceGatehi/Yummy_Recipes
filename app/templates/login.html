@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  
+  <link rel="stylesheet" type="text/css" href="./static/style.css"> 
+  <link rel="stylesheet" type="text/css" href="./static/bootstrap/css/bootstrap.css">
+  
+</head>
+<body class="bodyimg" style="background-image: url(./static/images/yum11.jpg)">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+      </div>
+      <ul class="nav navbar-nav pull-right">
+        <li><a href="/">Home</a></li>
+        <li class="active"><a href="/login">Log in</a></li>
+     
+        <li><a href="/registration">Register</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- <div class="container">
+<div class="col-sm-offset-4">
+  <div class="col-sm-6"> -->
+   <div class="container">
+    <div class="col-sm-offset-4">
+      
+      <div class="jumbotron" style="width: 50%;">
+          {% if resp in resp%}
+          <div class="alert alert-success" role="alert" id="reg-alert">
+            {{ resp }}
+        </div>
+          {%endif%}
+        
+        <form action="/login" method="post" >
+          <h2 >Log in</h2>
+          <div class="row">
+            <div class="form-group ">
+              <label>Enter Email address</label>
+              <label for="inputEmail" class="sr-only">Email address</label>
+
+              <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group ">
+              <label>Enter Password</label>
+              <label for="inputPassword" class="sr-only">Password</label>
+              <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group ">
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+             
+
+            </div>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+</body>
+</html>   
