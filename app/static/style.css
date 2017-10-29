@@ -1,0 +1,40 @@
+body {
+   padding-top: 40px;
+    padding-bottom: 40px;
+    
+  }
+  /* Show it is fixed to the top */
+body {
+  min-height: 63rem;
+  /*padding-top: 4.5rem;*/
+}
+.bodyimg {
+    margin: 0;
+    height: 100%;
+    background-image: url("./images/yum11.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+.top {
+    display: flex;
+    background: transparent; 
+    background-color: #337ab7    ;
+     padding: 1em 1%;  
+    height: 25px;
+     position: relative;
+     border-bottom: 1px solid #555;
+     box-shadow: 0 2px 2px 2px rgba(25,25,25,0.2);
+  }
+    .top .icon-left a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 20px; 
+    padding-right: 30px;
+  }
+  .jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    color: inherit;
+   
+}
