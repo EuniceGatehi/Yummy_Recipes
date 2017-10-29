@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Recipes{%endblock%} 
+{% block body %}
+<body class="bodyimg"style="background-image: url(./static/images/yum11.jpg)" ></body>
+<div class="container page-content">
+	<div class="jumbotron">
+		<div class="row container">
+			{%if resp in resp%}
+
+			<div class="alert alert-success" role="alert" id="reg-alert">
+				{{ resp }}
+			</div>
+
+			{%endif%} {%if error in error%}
+
+			<div class="alert alert-danger" role="alert" id="reg-alert">
+				{{ error }}
+			</div>
+
+			{%endif%} {% if name in name %}
+			<div>
+				<h4 style="margin:0px 0px 30px 10px">
+					<strong>Category name: {{ name }}</strong>
+				</h4>
+			</div>
+			{%endif%}
+			<div>
+				<form id="add-recipe-form" method="post" action="/recipes/{{ name }}" >
+					<div class="row">
+						<div class="col-sm-8">
+							<div class="form-group">
+
+								<input type="textareafield" name="recipe-name" id="recipe-name" placeholder="Recipe name" value="" class="form-control" required>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<input type="submit" method="post" name="recipe-submit" id="recipe-submit" class=" btn btn-primary" value="Add Recipe">
+							</div>
+						</div>
+					</div>
+				</form>
+				<!--form-->
+			</div>
+		</div>
+		<div class="row container">
+			<div class="col-md-10">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">Recipes</h3>
+					</div>
+					<!--panel-heading-->
+					<table class="table table-hover" id="activity-table">
+						<thead>
+							<tr>
+								<th>Recipe Name</th>
+								<th>Save Edit</th>
+								<th>Trash</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for reciperecipes in recipecategory %}
+							<tr>
+								<form id="edit-name-form-{{ reciperecipes }}">
+									<td>
+										<div class="form-group">
+											<input type="textarea" value="{{ reciperecipes }}" class="form-control" name="recipe_name" style="border:none">
+											<input type="hidden" value="{{ reciperecipes }}" class="form-control" name="recipe_name_org">
+											<input type="hidden" value="{{ name }}" class="form-control" name="category_name">
+										</div>
+									</td>
+									<td>
+										<button type="submit" class="btn btn-info btn-sm" form="edit-name-form-{{ reciperecipes }}" formmethod="post" formaction="/edit-recipe">
+											<span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Save</button>
+									</td>
+									<td>
+										<button type="submit" class="btn btn-info btn-sm" form="edit-name-form-{{ reciperecipes }}" formmethod="post" formaction="/delete-recipe">
+											<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Trash</button>
+									</td>
+								</form>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<!--panel panel-success-->
+			</div>
+			<!--col-md-8-->
+		</div>
+	</div>
+</div>
+{% endblock %}

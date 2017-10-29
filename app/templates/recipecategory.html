@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block title %}Recipe category{%endblock%} {% block body %}
+<div class="container page-content">
+	<div class="jumbotron" style="width: 80%; margin:0px 0px 30px 30px;" >
+	<div class="row container">
+		{%if resp in resp%}
+
+		<div class="alert alert-success" role="alert" id="reg-alert">
+			{{ resp }}
+		</div>
+
+		{%endif%}
+		{%if error in error%}
+
+        <div class="alert alert-danger" role="alert" id="reg-alert">
+            {{ error }}
+        </div>
+
+        {%endif%} 
+		<div>
+
+			<form id="add-category-form" method="post" action="/recipecategory" style="display: block;margin:0px 0px 30px 30px;">
+				<div class="row">
+					<div class="col-sm-8">
+						<div class="form-group">
+							<input type="text" name="category-name" id="category-name" placeholder="Category name" value="" class="form-control" required>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<input type="submit" method="post" name="category-submit" id="category-submit" class=" btn btn-primary" value="Add Category">
+						</div>
+					</div>
+				</div>
+			</form>
+			<!--form-->
+		</div>
+	</div>
+	
+	</div>
+	<div class="row container">
+		
+		<div class="col-md-10">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">Recipe Category</h3>
+				</div>
+				<!--panel-heading-->
+				<table class="table table-hover" id="activity-table">
+					<thead>
+						<tr>
+							<th>Category Name</th>
+							<th>Save Edit</th>
+							<th>Trash</th>
+                            <th>Add Recipe</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for recipe in recipecategory %}
+						<tr>
+							<form id="category-name-form-{{ recipe['name'] }}">
+								<td>
+									<div class="form-group">
+										<input type="text" value="{{ recipe['name'] }}" class="form-control" name="category_name" style="border:none">
+										<input type="hidden" value="{{ recipe['name'] }}" class="form-control" name="category_name_org">
+									</div>
+								</td>
+								<td> <button type="submit" class="btn btn-info btn-sm" form="category-name-form-{{ recipe['name'] }}" formmethod="post" formaction="/edit-category">
+							<span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Save</button>
+								</td>
+								<td> <button type="submit" class="btn btn-info btn-sm" form="category-name-form-{{ recipe['name'] }}" formmethod="post" formaction="/delete-category">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Trash</button>
+								</td>
+                                <td>
+                                    <a href="/recipes/{{ recipe['name'] }}" class="btn btn-primary">Add recipe</a>
+                                </td>
+							</form>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<!--panel panel-success-->
+		</div>
+		<!--col-md-8-->
+	</div>
+	</div>
+</div>
+</div>
+{% endblock %}
