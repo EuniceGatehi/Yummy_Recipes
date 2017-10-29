@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %} Home {% endblock %}</title>
+
+  <link rel="stylesheet" type="text/css" href="./static/style.css">
+  <link rel="stylesheet" type="text/css" href="./static/bootstrap/css/bootstrap.css">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body class="bodyimg" style="background-image: url(./static/images/yum11.jpg)">
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand page-scroll" href="/">YummyRecipes</a>
+      </div>
+      <ul class="nav navbar-nav pull-right">
+
+        
+        {% if 'email' not in session %}
+        <li>
+            <a href="/" class="page-scroll">Home</a>
+        </li>
+        <li>
+            <a href="/registration" class="page-scroll">Register</a>
+        </li>
+        <li>
+            <a href="/login" class="page-scroll">Login</a>
+        </li>
+        {% else %}
+          <li>
+            <a href="/recipecategory" class="page-scroll">Recipe Categories</a>
+          </li>
+          <li><a href="/logout" class="page-scroll">Logout</a></li>
+           
+        {% endif %}
+
+      </ul>
+
+  </nav>
+  {% block body %}
+  {% endblock %}
+  <footer class="footer">
+    <p>© 2017 Eunice Gatehi</p>
+  </footer>
+</div> 
+
+
+</body>
+
+</html>
