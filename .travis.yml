@@ -9,4 +9,4 @@ script:
  - nosetests
 
 after_success:
-  coveralls --ignore errors
+  coveralls
