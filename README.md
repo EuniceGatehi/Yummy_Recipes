@@ -1,4 +1,4 @@
-https://travis-ci.org/EuniceGatehi/Yummy_Recipes.svg?branch=developchallengetwo
+[![Build Status](https://travis-ci.org/EuniceGatehi/Yummy_Recipes.svg?branch=developchallengetwo)](https://travis-ci.org/EuniceGatehi/Yummy_Recipes)
 
 # Yummy_Recipes
 Andela Boot-camp Product Challenge
