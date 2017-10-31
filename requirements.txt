@@ -5,6 +5,8 @@ click==6.7
 colorama==0.3.9
 configparser==3.5.0
 coverage==4.0.3
+coveralls==1.2.0
+docopt==0.6.2
 Flask==0.12.2
 gunicorn==19.7.1
 idna==2.6
