@@ -71,6 +71,7 @@ def recipecategory():
     if request.method == 'POST':
         category_name = request.form['category-name']
         msg = recipecategory_obj.create_category(category_name, user)
+        user_categories = recipecategory_obj.get_owner(user)
         if isinstance(msg, list):
             return render_template('recipecategory.html', recipecategory=msg)
         return render_template('recipecategory.html', error=msg, recipecategory=user_categories)
@@ -79,13 +80,14 @@ def recipecategory():
 @app.route('/edit-category', methods=['GET', 'POST'])
 @authorize
 def save_edits():
-    """ Handles editing of shopping lists """
+    """ Handles editing of categories """
     if user == session['email']:
         user_categories = recipecategory_obj.get_owner(user=user)
     if request.method == 'POST':
         edit_name = request.form['category_name']
         org_name = request.form['category_name_org']
         msg = recipecategory_obj.edit_category(edit_name, org_name, user)
+        user_categories = recipecategory_obj.get_owner(user=user)
         if msg == recipecategory_obj.recipe_category:
             response = "Successfully edited category " + org_name
             return render_template('recipecategory.html', resp=response, recipecategory=msg)
