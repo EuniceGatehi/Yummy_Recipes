@@ -42,7 +42,7 @@ class RecipesClass(object):
             }
             self.recipe_category.append(activity_dict)
             return self.owner_recipes(user, category_name)
-        return "No special characters (. , ! space [] )"
+        return "No special characters (. , ! [] )"
 
     def edit_recipe(self, recipe_name, org_recipe_name, category_name, user):
         """Handles editing of recipes

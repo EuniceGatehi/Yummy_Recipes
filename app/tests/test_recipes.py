@@ -40,7 +40,7 @@ class TestCasesRecipes(unittest.TestCase):
         """
         msg = self.recipes_class_obj.add_recipe(
             "Breakfast", "Bread!", "mary@gmail.com")
-        self.assertIn("No special characters (. , ! space [] )", msg)
+        self.assertIn("No special characters (. , ! [] )", msg)
 
     def test_owner(self):
         """ Check for recipes belonging to owner"""

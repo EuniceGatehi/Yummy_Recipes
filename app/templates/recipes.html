@@ -30,7 +30,7 @@
 						<div class="col-sm-8">
 							<div class="form-group">
 
-								<input type="textareafield" name="recipe-name" id="recipe-name" placeholder="Recipe name" value="" class="form-control" required>
+								<textarea name="recipe-name" id="recipe-name" placeholder="Recipe name" value="" class="form-control" required></textarea>
 							</div>
 						</div>
 						<div class="col-sm-4">
@@ -64,7 +64,7 @@
 								<form id="edit-name-form-{{ reciperecipes }}">
 									<td>
 										<div class="form-group">
-											<input type="textarea" value="{{ reciperecipes }}" class="form-control" name="recipe_name" style="border:none">
+											<textarea value="{{ reciperecipes }}" class="form-control" name="recipe_name" style="border:none"></textarea>
 											<input type="hidden" value="{{ reciperecipes }}" class="form-control" name="recipe_name_org">
 											<input type="hidden" value="{{ name }}" class="form-control" name="category_name">
 										</div>
