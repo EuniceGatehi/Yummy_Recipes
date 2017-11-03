@@ -11,19 +11,19 @@ class User(object):
         # list to contain users
         self.user_list = []
 
-    def registeruser(self, username, email, password, cpassword):
+    def registeruser(self, username, email, password, confirmpassword):
         """
         Args
             username(string):name
             email(string):user email
             upasswd(string):password
         Return
-           error msg or success msg
+           error response_message or success response_message
         Purpose
            register users that have signed up by adding to dictionary
         """
         # empty dict to hold each user
-        user_dict = {}
+        user_details = {}
         # check for existing user
         for user in self.user_list:
             if email == user['email']:
@@ -36,11 +36,11 @@ class User(object):
         # regular expression for email
         elif not re.match(r"(^[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+\.[a-z]+$)", email):
             return "Please provide a valid email address"
-        elif password == cpassword:
-            user_dict['username'] = username
-            user_dict['email'] = email
-            user_dict['password'] = password
-            self.user_list.append(user_dict)
+        elif password == confirmpassword:
+            user_details['username'] = username
+            user_details['email'] = email
+            user_details['password'] = password
+            self.user_list.append(user_details)
         else:
             return "Password mismatch"
         return "Successfully registered. You can now login!"
@@ -51,7 +51,7 @@ class User(object):
             email(string):user email
             userpassword(string):password
         Return
-           error msg or success msg
+           error response_message or success response_message
         Purpose
            Login users
         """

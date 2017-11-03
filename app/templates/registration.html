@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Registration</title>
-  
-  <link rel="stylesheet" type="text/css" href="./static/style.css"> 
+
+  <link rel="stylesheet" type="text/css" href="./static/style.css">
   <link rel="stylesheet" type="text/css" href="./static/bootstrap/css/bootstrap.css">
-  
+
 </head>
-<body class="bodyimg"style="background-image: url(./static/images/yum11.jpg)" >
+
+<body class="bodyimg" style="background-image: url(./static/images/yum11.jpg)">
 
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        
+
       </div>
       <ul class="nav navbar-nav pull-right">
-        <li><a href="/">Home</a></li>
-        <li><a href="/login">Log in</a></li>
-        
-        <li class="active"><a href="/registration">Register</a></li>
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/login">Log in</a>
+        </li>
+
+        <li class="active">
+          <a href="/registration">Register</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -31,11 +39,13 @@
           {% if resp in resp%}
           <div class="alert alert-success" role="alert" id="reg-alert">
             {{ resp }}
-        </div>
+          </div>
           {%endif%}
-                  
+
           <form class="form-signin" action="/registration" method="post">
-            <h2 class="form-signin-heading"><center>Register</center></h2>
+            <h2 class="form-signin-heading">
+              <center>Register</center>
+            </h2>
             <div class="row">
               <div class="form-group">
                 <label>Username</label>
@@ -68,18 +78,19 @@
               </div>
             </div>
             <!-- <div class="row"> -->
-              <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-               
-              </div>
+            <div class="form-group">
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+
             </div>
-          </form>
         </div>
+        </form>
       </div>
     </div>
   </div>
-</div>
+  </div>
+  </div>
 
-</div>
+  </div>
 </body>
-</html>  
+
+</html>

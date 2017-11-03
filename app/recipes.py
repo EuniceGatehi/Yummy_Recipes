@@ -21,7 +21,7 @@ class RecipesClass(object):
                       == user and item['category'] == recipe_name]
         return user_recipes
 
-    def add_recipe(self, category_name, recipe_name, user):
+    def add_recipe(self, category_name, recipe_name,recipe_description, user):
         """Handles adding a recipe to a recipe category
             Args
                 recipe category name
@@ -29,18 +29,19 @@ class RecipesClass(object):
                 list of recipes
         """
         # Check for special characters
-        if re.match("^[a-zA-Z0-9 _]*$", recipe_name):
+        if re.match("^[a-zA-Z0-9_]*$", recipe_name):
             # Get users recipes
             my_recipes = self.owner_recipes(user, category_name)
             for item in my_recipes:
                 if item['name'] == recipe_name:
                     return "recipe name already exists"
-            activity_dict = {
+            add_details = {
                 'name': recipe_name,
                 'category': category_name,
+                'description':recipe_description,
                 'owner': user
             }
-            self.recipe_category.append(activity_dict)
+            self.recipe_category.append(add_details)
             return self.owner_recipes(user, category_name)
         return "No special characters (. , ! [] )"
 
@@ -58,10 +59,10 @@ class RecipesClass(object):
                 if item['name'] != recipe_name:
                     if item['name'] == org_recipe_name:
                         del item['name']
-                        edit_dict = {
+                        edit_details = {
                             'name': recipe_name,
                         }
-                        item.update(edit_dict)
+                        item.update(edit_details)
                 else:
                     return "Recipe name already exists"
         return self.owner_recipes(user, category_name)
@@ -87,4 +88,4 @@ class RecipesClass(object):
            category name
         """
         self.recipe_category[:] = [
-            item for recipe in self.recipe_category if recipe.get('category') != category_name]
+            recipe for recipe in self.recipe_category if recipe.get('category') != category_name]

@@ -2,7 +2,7 @@
 
 from flask import Flask
 from app.userclass import User
-from app.recipecategories import RecipecategoryClass
+from app.recipecategories import CategoryClass
 from app.recipes import RecipesClass
 
 
@@ -10,9 +10,9 @@ from app.recipes import RecipesClass
 app = Flask(
     __name__, instance_relative_config=True)
 app.secret_key = 'lif3isgood'
-user_obj = User()
-recipecategory_obj = RecipecategoryClass()
-reciperecipes_obj = RecipesClass()
+user_object = User()
+category_object = CategoryClass()
+recipes_object = RecipesClass()
 from app import views
 
 # Load the config file

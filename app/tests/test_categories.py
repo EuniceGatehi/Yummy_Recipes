@@ -1,6 +1,6 @@
 """test_recipecategories.py"""
 import unittest
-from app.recipecategories import RecipecategoryClass
+from app.recipecategories import CategoryClass
 
 
 class TestCasesRecipecategory(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestCasesRecipecategory(unittest.TestCase):
     def setUp(self):
         """Setting up RecipecategoryClass
         """
-        self.recipecategory_class_obj = RecipecategoryClass()
+        self.recipecategory_class_obj = CategoryClass()
 
     def tearDown(self):
         """Removing RecipecategoryClass
@@ -30,16 +30,16 @@ class TestCasesRecipecategory(unittest.TestCase):
         self.recipecategory_class_obj.recipe_category = \
         [{'owner': 'mary@gmail.com', 'name': 'Breakfast'},
          {'owner': 'mary@gmail.com', 'name': 'Lunch'}]
-        msg = self.recipecategory_class_obj.create_category(
+        response_message = self.recipecategory_class_obj.create_category(
             "Breakfast", "mary@gmail.com")
-        self.assertIn("recipe category name already exists.", msg)
+        self.assertIn("recipe category name already exists.", response_message)
 
     def test_special_characters(self):
         """Check for special characters in category name
         """
         user = "mary@gmail.com"
-        msg = self.recipecategory_class_obj.create_category("Brea.kf-ast", user)
-        self.assertEqual(msg, "No special characters (. , ! space [] )")
+        response_message = self.recipecategory_class_obj.create_category("Brea.kf-ast", user)
+        self.assertEqual(response_message, "No special characters (. , ! space [] )")
 
     def test_owner(self):
         """ Check for recipe category belonging to owner"""
@@ -48,26 +48,26 @@ class TestCasesRecipecategory(unittest.TestCase):
                                                   'name': 'Brunch'},
                                                  {'owner': 'mary@gmail.com', 'name': 'Dinner'}]
         user = "mary@gmail.com"
-        msg = self.recipecategory_class_obj.get_owner(user)
-        self.assertEqual(msg, [{'owner': 'mary@gmail.com', 'name': 'Breakfast'}, {
+        response_message = self.recipecategory_class_obj.get_owner(user)
+        self.assertEqual(response_message, [{'owner': 'mary@gmail.com', 'name': 'Breakfast'}, {
             'owner': 'mary@gmail.com', 'name': 'Dinner'}])
 
     def test_correct_output(self):
         """Check for correct recipe  category creation
         """
-        msg = self.recipecategory_class_obj.create_category(
+        response_message = self.recipecategory_class_obj.create_category(
             'Dinner', "mary@gmail.com")
         self.assertEqual(
-            msg, [{'owner': 'mary@gmail.com', 'name': 'Dinner'}])
+            response_message, [{'owner': 'mary@gmail.com', 'name': 'Dinner'}])
 
     def test_existing_recipecategory(self):
         """Check for edits to category name
         """
         self.recipecategory_class_obj.recipe_category = [{'owner': 'mary@gmail.com', 'name': 'Lunch'}, {
             'owner': 'mary@gmail.com', 'name': 'Breakfast'}]
-        msg = self.recipecategory_class_obj.edit_category(
+        response_message = self.recipecategory_class_obj.edit_category(
             'Dinner', 'Lunch', "mary@gmail.com")
-        self.assertEqual(msg, [{'owner': 'mary@gmail.com', 'name': 'Dinner'}, {
+        self.assertEqual(response_message, [{'owner': 'mary@gmail.com', 'name': 'Dinner'}, {
             'owner': 'mary@gmail.com', 'name': 'Breakfast'}])
 
     def test_edit_existing_recipecategory(self):
@@ -75,9 +75,9 @@ class TestCasesRecipecategory(unittest.TestCase):
         """
         self.recipecategory_class_obj.recipe_category = [{'owner': 'mary@gmail.com', 'name': 'Breakfast'}, {
             'owner': 'mary@gmail.com', 'name': 'Lunch'}]
-        msg = self.recipecategory_class_obj.edit_category(
+        response_message = self.recipecategory_class_obj.edit_category(
             'Lunch', 'Breakfast', "mary@gmail.com")
-        self.assertIn("Recipe category name already exists", msg)
+        self.assertIn("Recipe category name already exists", response_message)
 
     def test_delete_recipecategory(self):
         """Check to see if recipecategory is deleted
@@ -86,12 +86,13 @@ class TestCasesRecipecategory(unittest.TestCase):
         [{'owner': 'mary@gmail.com', 'name': 'Breakfast'}, \
         {'owner': 'mary@gmail.com', 'name': 'Lunch'}, \
         {'owner': 'mary@gmail.com', 'name': 'Dinner'}]
-        msg = self.recipecategory_class_obj.delete_category(
+        response_message = self.recipecategory_class_obj.delete_category(
             'Breakfast', "mary@gmail.com")
-        self.assertEqual(msg, \
+        self.assertEqual(response_message, \
         [{'owner': 'mary@gmail.com', 'name': 'Lunch'}, \
         {'owner': 'mary@gmail.com', 'name': 'Dinner'}])
 
 
 if __name__ == '__main__':
     unittest.main()
+    

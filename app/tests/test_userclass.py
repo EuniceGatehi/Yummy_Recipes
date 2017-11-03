@@ -32,9 +32,9 @@ class AccountTestCases(unittest.TestCase):
         Returns
             error message
         """
-        msg = self.user.registeruser(
+        response_message = self.user.registeruser(
             "Eunice", "eunicegatehi@gmail.com", "eunicegatehi", "eunicegatehiw")
-        self.assertEqual( msg, "Password mismatch")
+        self.assertEqual( response_message, "Password mismatch")
     def test_case_short_pwd(self):
         """
         Args
@@ -44,10 +44,10 @@ class AccountTestCases(unittest.TestCase):
         Returns
             error message
         """
-        msg = self.user.registeruser(
+        response_message = self.user.registeruser(
             "Eunice", "gatehieunice@gmail.com", "eunce", "eunce")
         self.assertEqual(
-            msg, "Your password should be at least 6 characters long")
+            response_message, "Your password should be at least 6 characters long")
 
     def test_case_existing_user(self):
         """
@@ -58,9 +58,9 @@ class AccountTestCases(unittest.TestCase):
         """
         self.user.registeruser(
             "Eunice", "eunicegatehi@gmail.com", "eunicegatehi", "eunicegatehi")
-        msg = self.user.registeruser(
+        response_message = self.user.registeruser(
             "Eunice", "eunicegatehi@gmail.com", "eunicegatehi", "eunicegatehi")
-        self.assertIn("User already exists", msg)
+        self.assertIn("User already exists", response_message)
 
     def test_case_special_char(self):
         """
@@ -71,9 +71,9 @@ class AccountTestCases(unittest.TestCase):
         Returns
             error message
         """
-        msg = self.user.registeruser(
+        response_message = self.user.registeruser(
             "Eun!c$", "eunicegatehi@gmail.com", "eunice", "eunice")
-        self.assertIn( msg, "No special characters (. , ! space [] )")
+        self.assertIn( response_message, "No special characters (. , ! space [] )")
 
     def test_case_invalid_email(self):
         """
@@ -84,9 +84,9 @@ class AccountTestCases(unittest.TestCase):
         Returns
             error message
         """
-        msg = self.user.registeruser(
+        response_message = self.user.registeruser(
             "Eunice", "eunicegatehi@gmail", "eunicegatehi", "eunicegatehi")
-        self.assertEqual(msg, "Please provide a valid email address")
+        self.assertEqual(response_message, "Please provide a valid email address")
 
     def test_case_correct_input(self):
         """
@@ -97,9 +97,9 @@ class AccountTestCases(unittest.TestCase):
         Returns
             success message
         """
-        msg = self.user.registeruser(
+        response_message = self.user.registeruser(
             "Eunice", "eunicegatehi@gmail.com", "eunicegatehi", "eunicegatehi")
-        self.assertIn("Successfully registered. You can now login", msg)
+        self.assertIn("Successfully registered. You can now login", response_message)
 
     def test_case_login_noaccount(self):
         """
@@ -110,8 +110,8 @@ class AccountTestCases(unittest.TestCase):
         """
         self.user.user_list = [
             {'username': 'eunice', 'password': 'eunicegatehi', 'email': 'eunicegatehi@gmail.com'}]
-        msg = self.user.login("wanjigi@gmail.com", "wanjigi")
-        self.assertEqual(msg, "You have no account,please sign up")
+        response_message = self.user.login("wanjigi@gmail.com", "wanjigi")
+        self.assertEqual(response_message, "You have no account,please sign up")
 
     def test_case_login_wrong_password(self):
         """
@@ -122,8 +122,8 @@ class AccountTestCases(unittest.TestCase):
         """
         self.user.user_list = [
             {'username': 'eunice', 'password': 'eunicegatehi', 'email': 'euicegatehiw@gmail.com'}]
-        msg = self.user.login("euicegatehiw@gmail.com", "gatehieunice")
-        self.assertEqual(msg, "Password mismatch")
+        response_message = self.user.login("euicegatehiw@gmail.com", "gatehieunice")
+        self.assertEqual(response_message, "Password mismatch")
 
     def test_case_correct_login(self):
         """
@@ -134,9 +134,10 @@ class AccountTestCases(unittest.TestCase):
         """
         self.user.user_list = [
             {'username': 'eunice', 'password': 'eunicegatehi', 'email': 'eunicegatehiw@gmail.com'}]
-        msg = self.user.login("eunicegatehiw@gmail.com", "eunicegatehi")
-        self.assertIn("Successfully logged in, create recipecategory!", msg)
+        response_message = self.user.login("eunicegatehiw@gmail.com", "eunicegatehi")
+        self.assertIn("Successfully logged in, create recipecategory!", response_message)
 
 
 if __name__ == '__main__':
     unittest.main()
+    

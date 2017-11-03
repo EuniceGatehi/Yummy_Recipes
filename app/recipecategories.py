@@ -2,7 +2,7 @@
 import re
 
 
-class RecipecategoryClass(object):
+class CategoryClass(object):
     """
     Handles creation of recipe categories
     """
@@ -37,16 +37,16 @@ class RecipecategoryClass(object):
             for item in my_recipe_categories:
                 if category_name == item['name']:
                     return "recipe category name already exists."
-            recipe_dict = {
+            recipe_details = {
                 'name': category_name,
                 'owner': user,
             }
-            self.recipe_category.append(recipe_dict)
+            self.recipe_category.append(recipe_details)
         else:
             return "No special characters (. , ! space [] )"
         return self.get_owner(user)
 
-    def edit_category(self, edit_name, org_name, user):
+    def edit_category(self, edit_name, original_name, user):
         """Handles edits made to recipe category name
             Args
                 editted name and original name
@@ -58,16 +58,16 @@ class RecipecategoryClass(object):
             my_recipe_categories = self.get_owner(user)
             for item in my_recipe_categories:
                 if edit_name != item['name']:
-                    if org_name == item['name']:
+                    if original_name == item['name']:
                         del item['name']
-                        edit_dict = {
+                        edit_details = {
                             'name': edit_name,
                         }
-                        item.update(edit_dict)
+                        item.update(edit_details)
                 else:
                     return "Recipe category name already exists"
         else:
-            return "No special characters (. , ! space [] )"
+            return "No special characters (. , ! [] )"
         return self.get_owner(user)
 
     def delete_category(self, category_name, user):

@@ -1,7 +1,7 @@
 """ views.py """
 from functools import wraps
-from flask import render_template, request, session
-from app import app, user_obj, recipecategory_obj, reciperecipes_obj
+from flask import render_template, request, session, redirect
+from app import app, user_object, category_object, recipes_object
 
 # Variable stores user's email
 user = None
@@ -13,8 +13,8 @@ def authorize(f):
         """Function to check login status"""
         if "email" in session:
             return f(*args, **kwargs)
-        msg = "Please login"
-        return render_template("login.html", resp=msg)
+        response_message = "Please login"
+        return render_template("login.html", resp=response_message)
     return check
 
 
@@ -33,12 +33,12 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        cpassword = request.form['confirm-password']
+        confirmpassword = request.form['confirm-password']
 
-        msg = user_obj.registeruser(username, email, password, cpassword)
-        if msg == "Successfully registered. You can now login!":
-            return render_template("login.html", resp=msg)
-        return render_template("registration.html", error=msg)
+        response_message = user_object.registeruser(username, email, password, confirmpassword)
+        if response_message == "Successfully registered. You can now login!":
+            return render_template("login.html", resp=response_message)
+        return render_template("registration.html", error=response_message)
 
     return render_template("registration.html")
 
@@ -50,14 +50,14 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        msg = user_obj.login(email, password)
-        if msg == "Successfully logged in, create recipecategory!":
+        response_message = user_object.login(email, password)
+        if response_message == "Successfully logged in, create recipecategory!":
             session['email'] = email
             global user
             user = email
-            user_categories = recipecategory_obj.get_owner(user)
-            return render_template('recipecategory.html', resp=msg, recipecategory=user_categories)
-        return render_template('login.html', error=msg)
+            user_categories = category_object.get_owner(user)
+            return render_template('recipecategory.html', resp=response_message, recipecategory=user_categories)
+        return render_template('login.html', error=response_message)
     return render_template("login.html")
 
 @app.route('/recipecategory', methods=['GET', 'POST'])
@@ -67,32 +67,31 @@ def recipecategory():
     """
     if user == session['email']:
         global user_categories
-        user_categories = recipecategory_obj.get_owner(user)
+        user_categories = category_object.get_owner(user)
     if request.method == 'POST':
         category_name = request.form['category-name']
-        msg = recipecategory_obj.create_category(category_name, user)
-        user_categories = recipecategory_obj.get_owner(user)
-        if isinstance(msg, list):
-            return render_template('recipecategory.html', recipecategory=msg)
-        return render_template('recipecategory.html', error=msg, recipecategory=user_categories)
-    return render_template('recipecategory.html', recipecategory=recipecategory_obj.get_owner(user))
+        response_message = category_object.create_category(category_name, user)
+        user_categories = category_object.get_owner(user)
+        if isinstance(response_message, list):
+            return render_template('recipecategory.html', recipecategory=response_message)
+        return render_template('recipecategory.html', error=response_message, recipecategory=user_categories)
+    return render_template('recipecategory.html', recipecategory=category_object.get_owner(user))
 
 @app.route('/edit-category', methods=['GET', 'POST'])
 @authorize
 def save_edits():
     """ Handles editing of categories """
     if user == session['email']:
-        user_categories = recipecategory_obj.get_owner(user=user)
+        user_categories = category_object.get_owner(user=user)
     if request.method == 'POST':
         edit_name = request.form['category_name']
-        org_name = request.form['category_name_org']
-        msg = recipecategory_obj.edit_category(edit_name, org_name, user)
-        user_categories = recipecategory_obj.get_owner(user=user)
-        if msg == recipecategory_obj.recipe_category:
-            response = "Successfully edited category " + org_name
-            return render_template('recipecategory.html', resp=response, recipecategory=msg)
-        #existing = recipecategory_obj.recipe_category
-        return render_template('recipecategory.html', error=msg, recipecategory=user_recipes)
+        original_name = request.form['category_name_org']
+        response_message = category_object.edit_category(edit_name, original_name, user)
+        user_categories = category_object.get_owner(user=user)
+        if response_message == category_object.recipe_category:
+            return redirect('/recipecategory')
+        #existing = category_object.recipe_category
+        return render_template('recipecategory.html', error=response_message, recipecategory=user_categories)
     return render_template('recipecategory.html')
 
 
@@ -102,12 +101,13 @@ def delete_recipecategory():
     """Handles deletion of recipecategory and its items
     """
     if request.method == 'POST':
-        del_name = request.form['category_name']
-        msg = recipecategory_obj.delete_category(del_name, user=user)
+        delete_name = request.form['category_name']
+        response_message = category_object.delete_category(delete_name, user=user)
         # Delete its recipes
-        reciperecipes_obj.deleted_category_recipes(del_name)
-        response = "Successfuly deleted" + del_name
-        return render_template('recipecategory.html', resp=response, recipecategory=msg)
+        recipes_object.deleted_category_recipes(delete_name)
+        return redirect('/recipecategory')
+        response = "Successfuly deleted" + delete_name
+        return render_template('recipecategory.html', resp=response, recipecategory=response_message)
 
 
 @app.route('/recipes/<recipecategory>', methods=['GET', 'POST'])
@@ -116,19 +116,20 @@ def recipes(recipecategory):
     """Handles recipes creation
     """
     # Get a list of users recipes for a specific recipe category
-    user_recipes = reciperecipes_obj.owner_recipes(user, recipecategory)
+    user_recipes = recipes_object.owner_recipes(user, recipecategory)
     # specific recipe category
     new_category = [item['name']
-                for item in user_recipes if item['category'] == recipecategory]
+    for item in user_recipes if item['category'] == recipecategory]
     if request.method == 'POST':
         recipe_name = request.form['recipe-name']
-        msg = reciperecipes_obj.add_recipe(recipecategory, recipe_name, user)
-        if isinstance(msg, list):
+        recipe_description = request.form['recipe-description']
+        response_message = recipes_object.add_recipe(recipecategory, recipe_name,recipe_description, user)
+        if isinstance(response_message, list):
             new_category = [item['name']
-                        for item in msg if item['category'] == recipecategory]
+                        for item in response_message if item['category'] == recipecategory]
             return render_template("recipes.html", recipecategory=new_category, name=recipecategory)
-        # msg is not a list
-        return render_template("recipes.html", error=msg, name=recipecategory, recipecategory=new_category)
+        # response_message is not a list
+        return render_template("recipes.html", error=response_message, name=recipecategory, recipecategory=new_category)
     else:
         res = "You can now add your recipes"
         return render_template('recipes.html', resp=res, name=recipecategory, recipecategory=new_category)
@@ -143,20 +144,20 @@ def edit_recipe():
         recipe_name = request.form['recipe_name']
         recipe_name_org = request.form['recipe_name_org']
         category_name = request.form['category_name']
-        msg = reciperecipes_obj.edit_recipe(
+        response_message = recipes_object.edit_recipe(
             recipe_name, recipe_name_org, category_name, user)
-        if isinstance(msg, list):
+        if isinstance(response_message, list):
             res = "Successfully edited recipe " + recipe_name_org
             # Get edited list of the current recipe category
             newcategory = [item['name']
-                       for item in msg if item['category'] == category_name]
+                       for item in response_message if item['category'] == category_name]
             return render_template("recipes.html", recipecategory=newcategory, name=category_name, resp=res)
         else:
             # Get user's recipes in the current recipe category
-            user_recipes = reciperecipes_obj.owner_recipes(user, category_name)
+            user_recipes = recipes_object.owner_recipes(user, category_name)
             new_category = [item['name']
-                        for item in user_recipes if recipe['category'] == category_name]
-    return render_template("recipes.html", recipecategory=new_category, name=category_name, error=msg)
+                        for recipe in user_recipes if recipe['category'] == category_name]
+    return render_template("recipes.html", recipecategory=new_category, name=category_name, error=response_message)
 
         
 
@@ -167,10 +168,11 @@ def delete_recipe():
     """
     if request.method == 'POST':
         recipe_name = request.form['recipe_name']
+
         category_name = request.form['category_name']
-        msg = reciperecipes_obj.delete_recipe(recipe_name, user, category_name)
+        response_message = recipes_object.delete_recipe(recipe_name, user, category_name)
         response = "Successfuly deleted recipe " + recipe_name
-        return render_template("recipes.html", recipecategory=msg, name=category_name, resp=response)
+        return render_template("recipes.html", recipecategory=response_message, name=category_name, resp=response)
 
 
 @app.route('/logout')
