@@ -1,0 +1,144 @@
+{% extends "base.html" %} {% block title %}Recipes{%endblock%} {% block body %}
+<div class="container page-content" style=" background-image: url(" https://unsplash.com/photos/zXuHflGL8ss/download?force-true
+ ");">
+	<div class="row container">
+		<div class="col-md-10 text-center">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewRecipe">
+				Create New Recipe
+			</button>
+		</div>
+	</div>
+	<br/> {%if resp in resp%}
+
+	<div class="alert alert-success" role="alert" id="reg-alert">
+		{{ resp }}
+	</div>
+
+	{%endif%} {%if error in error%}
+
+	<div class="alert alert-danger" role="alert" id="reg-alert">
+		{{ error }}
+	</div>
+
+	{%endif%}
+	<div class="row container">
+
+		<div class="col-md-10">
+			<div class="panel panel-success">
+				{% if name in name %}
+				<div class="panel-heading">
+					<h3 class="panel-title">Your recipes for {{ name }} appear here</h3>
+				</div>
+				{%endif%}
+				<!--panel-heading-->
+				<table class="table table-hover" id="activity-table">
+
+					<tbody>
+						{% for reciperecipes in recipecategory %}
+						<tr>
+							<td>
+								<p>{{ reciperecipes }}</p>
+							</td>
+							<td>
+								<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editRecipe{{ reciperecipes }}" formaction="/edit-recipe">
+									<span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Edit</button>
+							</td>
+							<td>
+								<button type="submit" class="btn btn-info btn-sm" form="recipe-name-form-{{ reciperecipes }}" formmethod="post" formaction="/delete-recipe">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Trash</button>
+							</td>
+
+						</tr>
+
+
+
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<!--panel panel-success-->
+		</div>
+		<!--col-md-8-->
+	</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="createNewRecipe" tabindex="-1" role="dialog" aria-labelledby="createNewRecipeLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="createNewRecipeLabel">Create New Recipe</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="jumbotron" style="width: 80%; margin: 0px 0px 30px 30px;">
+					<div class="row container">
+						<div>
+							<form id="add-recipe-form" method="post" action="/recipes/{{ name }}">
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="form-group">
+
+											<textarea name="recipe-name" id="recipe-name" placeholder="Recipe name" value="" class="form-control" required></textarea>
+										</div>
+										<div class="form-group">
+											<label for="description">Description:</label>
+											<textarea class="form-control" rows="8" id="recipe-description"></textarea>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group">
+											<input type="submit" method="post" name="recipe-submit" id="recipe-submit" class=" btn btn-primary" value="Add Recipe">
+										</div>
+									</div>
+								</div>
+							</form>
+							<!--form-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% for reciperecipes in recipecategory %}
+<div class="modal fade" id="editRecipe{{ reciperecipes }}" tabindex="-1" role="dialog" aria-labelledby="editRecipe{{ reciperecipes }}Label"
+ aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="editRecipe{{ reciperecipes }}Label">Edit Recipe</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="jumbotron" style="width: 80%; margin:0px 0px 30px 30px;">
+					<div class="row container">
+
+						<div>
+
+							<tbody>
+								<div>
+
+									<form id="edit-name-form-{{ reciperecipes }}">
+										<td>
+											<div class="form-group">
+												<textarea value="{{ reciperecipes }}" class="form-control" name="recipe_name" style="border:none"></textarea>
+												<input type="hidden" value="{{ reciperecipes }}" class="form-control" name="recipe_name_org">
+												<input type="hidden" value="{{ name }}" class="form-control" name="category_name">
+											</div>
+										</td>
+									</form>
+								</div>
+								</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %} {% endblock %}

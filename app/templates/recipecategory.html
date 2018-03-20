@@ -1,0 +1,144 @@
+{% extends "base.html" %} {% block title %}Recipe category{%endblock%} {% block body %}
+
+<div class="container page-content">
+	<div class="row container">
+		<div class="col-md-10 text-center">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewCategory">
+				Create New Category
+			</button>
+		</div>
+	</div>
+	<br/>
+	<div class="row container">
+
+		<div class="col-md-10">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">Your categories appear here</h3>
+				</div>
+				<!--panel-heading-->
+				<table class="table table-hover" id="activity-table">
+
+					<tbody>
+						{% for recipe in recipecategory %}
+						<tr>
+							<td>
+								<p>{{ recipe['name'] }}</p>
+							</td>
+							<td>
+								<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editCategory{{ recipe['name'] }}">
+									<span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Edit</button>
+							</td>
+							<td>
+								<button type="submit" class="btn btn-info btn-sm" form="category-name-form-{{ recipe['name'] }}" formmethod="post"
+								 formaction="/delete-category">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Trash</button>
+							</td>
+							<td>
+								<a href="/recipes/{{ recipe['name'] }}" class="btn btn-primary">View my recipes</a>
+							</td>
+						</tr>
+
+
+
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<!--panel panel-success-->
+		</div>
+		<!--col-md-8-->
+	</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="createNewCategory" tabindex="-1" role="dialog" aria-labelledby="createNewCategoryLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="createNewCategoryLabel">Create New Category</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="jumbotron" style="width: 80%; margin:0px 0px 30px 30px;">
+					<div class="row container">
+						<div>
+
+							<form id="add-category-form" method="post" action="/recipecategory" style="display: block;margin:0px 0px 30px 30px;">
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="form-group">
+											<input type="text" name="category-name" id="category-name" placeholder="Category name" value="" class="form-control" required>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group">
+											<input type="submit" method="post" name="category-submit" id="category-submit" class=" btn btn-primary" value="Add Category">
+										</div>
+									</div>
+								</div>
+							</form>
+							<!--form-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% for recipe in recipecategory %}
+<div class="modal fade" id="editCategory{{ recipe['name'] }}" tabindex="-1" role="dialog" aria-labelledby="editCategory{{ recipe['name'] }}Label"
+ aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="editCategory{{ recipe['name'] }}Label">Edit Category</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="jumbotron" style="width: 80%; margin:0px 0px 30px 30px;">
+					<div class="row container">
+						{%if resp in resp%}
+
+						<div class="alert alert-success" role="alert" id="reg-alert">
+							{{ resp }}
+						</div>
+
+						{%endif%} {%if error in error%}
+
+						<div class="alert alert-danger" role="alert" id="reg-alert">
+							{{ error }}
+						</div>
+
+						{%endif%}
+						<div>
+
+							<form id="category-name-form-{{ recipe['name'] }}">
+								<td>
+									<div class="form-group">
+										<input type="text" value="{{ recipe['name'] }}" class="form-control" name="category_name" style="border:none">
+										<input type="hidden" value="{{ recipe['name'] }}" class="form-control" name="category_name_org">
+									</div>
+								</td>
+								<td>
+									<button type="submit" class="btn btn-info btn-sm" form="category-name-form-{{ recipe['name'] }}" formmethod="post"
+									 formaction="/edit-category">
+										<span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Save</button>
+								</td>
+
+								<td>
+									<a href="/recipecategory" class="btn btn-primary">Cancel</a>
+								</td>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %} {% endblock %}
