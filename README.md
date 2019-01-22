@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/EuniceGatehi/Yummy_Recipes/badge.svg?branch=developchallengetwo)](https://coveralls.io/github/EuniceGatehi/Yummy_Recipes?branch=developchallengetwo)
 
 # Yummy_Recipes
-Andela Boot-camp Product Challenge
+Product Challenge 1
 
 This application helps users in the management of recipes and categories. It helps users create,update and delete their categories as well as add their favorite recipes to these categories.
 
